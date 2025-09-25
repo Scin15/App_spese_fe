@@ -1,0 +1,31 @@
+
+export default async function insertData(url, data) {
+
+    const { userid, category_id, amount, note, date } = data
+    console.log("Data da inserire: ", data)
+
+        try{
+            const response = await fetch(url, {
+                method: "POST",
+                credentials : "include",
+                headers: {
+                    "content-type" : "application/json"
+                },
+                body: JSON.stringify({
+                    userid: Number(userid),
+                    category_id: Number(category_id),
+                    amount: Number(amount),
+                    note,
+                    date
+                })
+            })
+            if(!response.ok){
+                throw new Error
+            }
+            const insertedExpense = await response.json()
+            console.log("Spesa inserita: ", insertedExpense)
+            return insertedExpense
+        } catch(error){
+            console.log(`Errore nell'inserimento nuova spesa: ${error}`)
+        }
+}
