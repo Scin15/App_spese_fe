@@ -2,9 +2,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { Button } from '@mui/material';
 import EditExpense from './EditExpense';
-import { useState } from 'react';
+import { 
+    useState, 
+    useContext} from 'react';
 import deleteData from '../../jsUtils/deleteData';
-import { useContext } from 'react';
 import LoadingContext from '../context/LoadingContext';
 
 const ExpenseTable = ({data, categoryData, setDataState})=>{
@@ -26,42 +27,37 @@ const ExpenseTable = ({data, categoryData, setDataState})=>{
 
     const editExpense = (id)=> {
         //popup tipo form con campi da compilare e confermare
-        console.log("Voglio modificare la spesa con id: ", id)
-        console.log(data)
 
         setEdit({isEditing: true, dataID: id})
     }
 
-    console.log("Questi i dati per la tabella: ", data)
-
     // ritorno le righe della tabella a partire dall'array DB
     const rows = data.map((element)=>{
-        console.log("La riga che sto leggendo per la tabella è: ", element)
         return (
-        <tr key={element.id} className="border-b-[0.1px] border-grey capitalize">
+        <tr key={element.id} className="border-b-[0.1px] border-gray-400 capitalize">
             <td>{element.date?.substring(0, 10)}</td>
             <td>{element.category.category}</td>
             <td>{element.note}</td>
             <td>{element.amount}</td>
             <td>
                 <button onClick={()=>{editExpense(element.id)}}>
-                    <ModeEditIcon />
+                    <ModeEditIcon className='hover:text-blue-400 rounded-lg' />
                 </button>
                 <button onClick={()=>{removeExpense(element.id)}}>
-                    <DeleteIcon />
+                    <DeleteIcon className='hover:text-blue-400 rounded-lg' />
                 </button>
             </td>
         </tr>
         )
     })
 
-    return <div className="flex flex-col basis-full border-[0.1px] border-grey rounded-xl p-[10px] text-sm">
+    return <div className="flex flex-col basis-full shadow-xl inset-shadow-sm rounded-xl p-[10px] text-sm">
         <div className='relative'>
             <EditExpense data={data} categoryData={categoryData} setDataState={setDataState} edit={edit} setEdit={setEdit} />
         </div>
         <table className="basis-full table-auto">
             <thead>
-                <tr className="border-b-[0.1px] border-grey text-left font-bold text-base">
+                <tr className="border-b-[0.1px] border-gray-400 text-left font-bold text-base">
                     <th scope="col">Data</th>
                     <th scope="col">Categoria</th>
                     <th scope="col">Descrizione</th>

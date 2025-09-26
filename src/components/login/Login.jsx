@@ -11,10 +11,29 @@ const Login = () => {
     const [user, setUser] = useContext(UserContext)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [mailErr, setMailErr] = useState(false)
+    const [passErr, setPassErr] = useState(false)
     
     // funzione per gestire il login
     const handleSubmit = async e=>{
         e.preventDefault()  //per gestire il form non in automatico
+
+        // semplice check validità email
+        if(email == null || email == "") {
+            setMailErr(true)
+            return
+        } else {
+            setMailErr(false)
+        }
+        
+        // semplice check validità password
+        if(password == null || password == "") {
+            setPassErr(true)
+            return
+        } else {
+            setPassErr(false)
+        }
+
         const result = await (await fetch("http://localhost:3000/login", {
             method : "POST",
             credentials : 'include',
@@ -49,9 +68,10 @@ const Login = () => {
         }
     }
 
-    return <div className="flex flex-col items-center justify-between font-mono">
+    return <div className="flex flex-col items-center justify-between font-mono rounded-xl mx-auto p-10 shadow-xl">
         <div className="m-[10px] font-bold text-3xl">
-            LOGIN
+            <h1 className=''>Login</h1>
+            <p className='text-sm mt-5'>Effettua l'accesso per gestire le tue spese</p>
         </div>
         <div className="flex flex-col border-black m-[10px]">
             <form className="flex flex-col" onSubmit={handleSubmit}>
@@ -63,6 +83,9 @@ const Login = () => {
                     placeholder='email'
                     autoComplete='email'
                 />
+                <p className='text-red-500'>
+                    {mailErr && "Inserisci una mail valida"}
+                </p>
                 <input
                     value={password}
                     onChange={handleChange}
@@ -71,9 +94,12 @@ const Login = () => {
                     placeholder='password'
                     autoComplete='password'
                 />
+                <p className='text-red-500'>
+                    {passErr && "Inserisci una password valida"}
+                </p>
                  <div className="flex justify-between">
-                    <button onClick={handleSubmit} className="m-[10px] bg-red-100 p-[5px] hover:bg-red-200 rounded-lg">Login</button>
-                    <NavLink to="/register" className="m-[10px] bg-red-100 p-[5px] hover:bg-red-200 rounded-lg">Registrati</NavLink>
+                    <button onClick={handleSubmit} className="font-semibold m-[10px] bg-blue-100 p-[5px] hover:bg-blue-200 rounded-lg">Login</button>
+                    <NavLink to="/register" className="font-semibold m-[10px] bg-blue-100 p-[5px] hover:bg-blue-200 rounded-lg">Registrati</NavLink>
                 </div>
             </form>
         </div>

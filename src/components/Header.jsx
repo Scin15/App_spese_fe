@@ -26,23 +26,23 @@ const logOutCallBack = async ()=> {
     navigate("/")
 } 
 
-    return <div className="flex justify-between h-[50px] font-mono font-semibold text-2xl">
+    return <div className="flex justify-between h-[50px] font-mono font-semibold text-2xl text-gray-800">
         
         <div className="flex items-center">
-            <NavLink to="/" className={({isActive})=>isActive ? "m-[5px] text-red-500" : "m-[5px] hover:text-red-400"}>
+            <NavLink to="/" className={({isActive})=>isActive ? "m-[5px] text-blue-700" : "m-[5px] hover:text-gray-500"}>
                 <FontAwesomeIcon icon={faHouseSolid} />
             </NavLink>
 
-            <NavLink to="about" className={({isActive})=>isActive ? "m-[5px] text-red-500" : "m-[5px] hover:text-red-400"}>
-                About
+            <NavLink to="about" className={({isActive})=>isActive ? "m-[5px] text-blue-700" : "m-[5px] hover:text-gray-500"}>
+                Statistiche
             </NavLink>
         </div>
 
         <div className="flex items-center">
-            <button onClick={logOutCallBack} className="m-[5px] hover:text-red-400">
+            <button onClick={logOutCallBack} className="m-[5px] hover:text-gray-500">
                 Logout
             </button>
-            <NavLink to="user" className={({isActive})=>{return isActive?"m-[5px] text-red-500":"m-[5px] hover:text-red-400"}}>
+            <NavLink to="user" className={({isActive})=>{return isActive?"m-[5px] text-blue-700":"m-[5px] hover:text-gray-500"}}>
                 <FontAwesomeIcon icon={faUserSolid}/>
             </NavLink>
 

@@ -1,12 +1,16 @@
 import CloseIcon from '@mui/icons-material/Close'
 import { options } from './BarChart'
 import updateData from '../../jsUtils/updateData'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import LoadingContext from '../context/LoadingContext'
 
 const EditExpense = ({data, categoryData, setDataState, edit, setEdit})=>{
 
+    console.log("Refreshato il componente EditExpense")
+
     const [loading, setLoading] = useContext(LoadingContext)
+    const [dateErr, setDateErr] = useState(false)
+    const [importErr, setImportErr] = useState(false)
 
     //devo sapere che spesa sto modificando
     console.log(categoryData)
@@ -17,9 +21,6 @@ const EditExpense = ({data, categoryData, setDataState, edit, setEdit})=>{
     if (edit.isEditing) {
         index = data.findIndex((e)=> e.id === edit.dataID)
         editedData = data[index]
-        console.log("Riga che sto modificando: ", editedData)
-        console.log(editedData.amount)
-        console.log(editedData.date)
     }
 
     const options = categoryData.map((element)=>{
@@ -38,6 +39,20 @@ const EditExpense = ({data, categoryData, setDataState, edit, setEdit})=>{
             amount: event.target.form[3].value,
         }
 
+        // controllo che sia inserita una data valida (non nulla e lungezza che rispetta il formato ISO 8601)
+        if (editedExpense.date == null || editedExpense.date == "" || editedExpense.date.length > 10){
+            console.log("La data è vuota!")
+            setDateErr(true)
+            return
+        }
+        
+        // controllo che sia inserito un valore non nullo per l'importo
+        if (editedExpense.amount == null || editedExpense.amount == ""){
+            console.log("L'importo è vuoto!")
+            setImportErr(true)
+            return
+        }
+
         console.log("Richiesta di update: ", editedExpense)
 
         updateData("http://localhost:3000/expenses", editedExpense)
@@ -47,11 +62,15 @@ const EditExpense = ({data, categoryData, setDataState, edit, setEdit})=>{
         setLoading(true)
     }
     
-    return <div className={edit.isEditing ? "flex flex-col absolute w-full border-[0.1px] border-grey rounded-xl bg-white items-stretch basis-full text-sm" : "hidden"}>
+    return <div className={edit.isEditing ? "flex flex-col absolute w-full shadow-xl rounded-xl bg-white items-stretch basis-full text-sm" : "hidden"}>
         <div className="relative ml-[10px] mt-[10px] mr-[10px] text-bold text-base">
             <h1>Modifica spesa</h1>
-            <button onClick={()=>{setEdit({isEditing: false, dataID: null})}} className="absolute top-px right-px">
-                <CloseIcon />
+            <button onClick={()=>{
+                setEdit({isEditing: false, dataID: null})
+                setDateErr(false)
+                setImportErr(false)
+                }} className="absolute top-px right-px">
+                <CloseIcon className='hover:text-blue-400 rounded-lg' />
             </button>
         </div>
             <form action="" className="flex flex-col items-stretch m-[10px]">
@@ -59,6 +78,7 @@ const EditExpense = ({data, categoryData, setDataState, edit, setEdit})=>{
                     <div className="flex flex-col">
                         <label htmlFor="data">Data</label>
                         <input key={edit.dataID} type="date" name="data" defaultValue={editedData.date?.substring(0,10)}></input>
+                        <p className="text-red-500">{(dateErr) && "Inserisci una data valida"}</p>
                     </div>
                     <div className="flex flex-col">
                         <label htmlFor="categoria">Categoria</label>
@@ -73,10 +93,11 @@ const EditExpense = ({data, categoryData, setDataState, edit, setEdit})=>{
                     <div className="flex flex-col">
                         <label htmlFor="importo">Importo</label>
                         <input key={edit.dataID} type="number" name="valore"  defaultValue={editedData.amount} />
+                        <p className="text-red-500">{(importErr) && "Inserisci un' importo valido"}</p>
                     </div>
                 </div>
                 <div className="flex justify-end mr-[10px] mt-[10px]">
-                    <button className="Submit border-[0.1px] border-grey rounded-sm" onClick={EditExpense}>Modifica</button>
+                    <button className="font-semibold m-[10px] bg-blue-100 p-[5px] hover:bg-blue-200 rounded-lg" onClick={EditExpense}>Modifica</button>
                 </div>
             </form>
     </div>

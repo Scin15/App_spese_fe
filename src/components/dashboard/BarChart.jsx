@@ -82,9 +82,7 @@ export const options = {
 
 const labels = ['']
 
-
 const BarChart = ({data})=> {
-    console.log(data.totalMonth, data.budgetMonth)
     const chartData = {
       labels,
       datasets: [

@@ -7,7 +7,6 @@ import UserContext from './components/context/UserContext.jsx'
 
 function App() {
   
-  console.log("carico il componente app")
   const [user, setUser] = useState({})
   const [loading, setLoading] = useState(true)
 
@@ -21,8 +20,6 @@ function App() {
         }
       }
       )).json()
-
-      console.log("Refresh: ", result)
 
       setUser({
         accessToken : result.accessToken,
@@ -45,7 +42,7 @@ function App() {
   if (loading) return <div>Loading...</div>
 
   return (
-    <div className="flex flex-col bg-red-50 border-1 border-black h-screen">
+    <div className="flex flex-col h-screen m-auto max-w-250 border-x-1 border-gray-300 px-5">
       <UserContext value={[user, setUser]}>
         <Header />
         <Outlet />

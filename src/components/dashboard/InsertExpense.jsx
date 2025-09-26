@@ -1,6 +1,6 @@
 import UserContext from "../context/UserContext"
 import LoadingContext from "../context/LoadingContext"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import insertData from "../../jsUtils/insertData"
 
 const InsertExpense = ({data, setDataState, categoryData})=>{
@@ -9,6 +9,8 @@ const InsertExpense = ({data, setDataState, categoryData})=>{
     const [user] = useContext(UserContext)
     // contesto per refreshare i dati quando inserisco una nuova spesa
     const [loading, setLoading] = useContext(LoadingContext)
+    const [dateErr, setDateErr] = useState(false)
+    const [importErr, setImportErr] = useState(false)
     
     // creo lista categorie per il menù a tendina
     const options = categoryData.map((element)=>{
@@ -28,6 +30,20 @@ const InsertExpense = ({data, setDataState, categoryData})=>{
             amount: event.target.form[3].value,
         }
 
+                // controllo che sia inserita una data valida (non nulla e lungezza che rispetta il formato ISO 8601)
+        if (newExpense.date == null || newExpense.date == "" || newExpense.date.length > 10){
+            console.log("La data è vuota!")
+            setDateErr(true)
+            return
+        }
+        
+        // controllo che sia inserito un valore non nullo per l'importo
+        if (newExpense.amount == null || newExpense.amount == ""){
+            console.log("L'importo è vuoto!")
+            setImportErr(true)
+            return
+        }
+
         insertData("http://localhost:3000/expenses", newExpense)
         .then(e=>{console.log("Dati insertiti: ", e)})
 
@@ -43,6 +59,7 @@ const InsertExpense = ({data, setDataState, categoryData})=>{
                     <div className="flex flex-col">
                         <label htmlFor="data">Data</label>
                         <input type="date" required name="data" />
+                        <p className="text-red-500">{(dateErr) && "Inserisci una data valida"}</p>                        
                     </div>
                     <div className="flex flex-col">
                         <label htmlFor="categoria">Categoria</label>
@@ -57,10 +74,11 @@ const InsertExpense = ({data, setDataState, categoryData})=>{
                     <div className="flex flex-col">
                         <label htmlFor="importo">Importo</label>
                         <input type="number" required name="valore" />
+                        <p className="text-red-500">{(importErr) && "Inserisci un' importo valido"}</p>
                     </div>
                 </div>
                 <div className="flex justify-end mr-[10px] mt-[10px]">
-                    <button className="Submit" onClick={insertExpense}>Inserisci</button>
+                    <button className='font-semibold m-[2px] bg-blue-100 p-[5px] hover:bg-blue-200 rounded-lg' onClick={insertExpense}>Inserisci</button>
                 </div>
             </form>
     </div>
