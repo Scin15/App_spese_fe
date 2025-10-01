@@ -11,6 +11,5 @@ export default async function fetchData(url) {
         } catch(error){
             console.log(`Errore nel caricare le spese: ${error}`)
         }
-        return expense
 }
 

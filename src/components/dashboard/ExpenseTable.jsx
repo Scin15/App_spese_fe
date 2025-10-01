@@ -8,7 +8,9 @@ import {
 import deleteData from '../../jsUtils/deleteData';
 import LoadingContext from '../context/LoadingContext';
 
-const ExpenseTable = ({data, categoryData, setDataState})=>{
+const ExpenseTable = ({data, categoryData})=>{
+
+    console.log("Refreshato il componente ExpenseTable")
 
     const [loading, setLoading] = useContext(LoadingContext)
     const [edit, setEdit] = useState({isEditing: false, dataID: null})
@@ -20,14 +22,15 @@ const ExpenseTable = ({data, categoryData, setDataState})=>{
         //setto lo stato con un array senza il valore trovato (toSpliced() ritorna un nuovo array)
         //setDataState((data)=>data.toSpliced(index,1))
         deleteData("http://localhost:3000/expenses", {id: id})
-        .then((e)=>{console.log("Spesa cancellata:", e)})
+        .then((e)=>{
+            console.log("Spesa cancellata:", e)
+            setLoading(true)
+        })
 
-        setLoading(true)
     }
 
     const editExpense = (id)=> {
         //popup tipo form con campi da compilare e confermare
-
         setEdit({isEditing: true, dataID: id})
     }
 
@@ -53,7 +56,7 @@ const ExpenseTable = ({data, categoryData, setDataState})=>{
 
     return <div className="flex flex-col basis-full shadow-xl inset-shadow-sm rounded-xl p-[10px] text-sm">
         <div className='relative'>
-            <EditExpense data={data} categoryData={categoryData} setDataState={setDataState} edit={edit} setEdit={setEdit} />
+            <EditExpense data={data} categoryData={categoryData} edit={edit} setEdit={setEdit} />
         </div>
         <table className="basis-full table-auto">
             <thead>

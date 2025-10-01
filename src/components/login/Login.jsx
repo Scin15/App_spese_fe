@@ -15,7 +15,7 @@ const Login = () => {
     const [passErr, setPassErr] = useState(false)
     
     // funzione per gestire il login
-    const handleSubmit = async e=>{
+    const handleSubmit = async e=> {
         e.preventDefault()  //per gestire il form non in automatico
 
         // semplice check validità email
@@ -50,6 +50,9 @@ const Login = () => {
             setUser({
                 accessToken : result.accessToken,
                 mail: result.mail,
+                id: result.id,
+                name: result.name,
+                surname: result.surname,
             })
 
             navigate("/")

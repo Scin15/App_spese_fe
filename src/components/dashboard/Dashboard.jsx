@@ -20,27 +20,25 @@ const stats = {
 }
 
 function Dashboard() {
-
-  console.log("Refreshato il componente Dashboard")
   
-  const [loading, setLoading] = useState(true)
-  const [expenseData, setExpenseData] = useState([])
-  const [categoryData, setCategoryData] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [expenseData, setExpenseData] = useState({expenseList: [], categoryList: []})
   const [user] = useContext(UserContext)
   const budgetLeft = stats.budgetMonth - stats.totalMonth
   
   useEffect(()=>{
-    fetchData(`http://localhost:3000/expenses/${user.id}`)
-    .then(e=>{
-      setExpenseData(e)
-    })
     
-    fetchData("http://localhost:3000/category")
-    .then(e=>{
-      setCategoryData(e)
-    })
+    const loadData = async () => {
+      const loadedExpense = await fetchData(`http://localhost:3000/expenses/${user.id}`)
+      const loadedCategory = await fetchData("http://localhost:3000/category")
+      setExpenseData({
+        expenseList: loadedExpense,
+        categoryList: loadedCategory
+      })
+      setLoading(false)
+    }
 
-    setLoading(false)
+    loadData()
 
   }, [loading])
 
@@ -78,10 +76,10 @@ function Dashboard() {
           </MainCard>
         </div>
         <div className='flex m-[10px]'>
-          <ExpenseTable data={expenseData} categoryData={categoryData} setDataState={setExpenseData}/>
+          <ExpenseTable data={expenseData.expenseList} categoryData={expenseData.categoryList} />
         </div>
         <div className='shadow-xl inset-shadow-sm rounded-xl flex justify-center m-[10px]'>
-          <InsertExpense data={expenseData} categoryData={categoryData} setDataState={setExpenseData}/>
+          <InsertExpense categoryData={expenseData.categoryList} />
         </div>
       </div>
     </LoadingContext>

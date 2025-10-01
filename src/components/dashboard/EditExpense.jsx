@@ -4,7 +4,7 @@ import updateData from '../../jsUtils/updateData'
 import { useContext, useState } from 'react'
 import LoadingContext from '../context/LoadingContext'
 
-const EditExpense = ({data, categoryData, setDataState, edit, setEdit})=>{
+const EditExpense = ({data, categoryData, edit, setEdit})=>{
 
     console.log("Refreshato il componente EditExpense")
 
@@ -13,7 +13,7 @@ const EditExpense = ({data, categoryData, setDataState, edit, setEdit})=>{
     const [importErr, setImportErr] = useState(false)
 
     //devo sapere che spesa sto modificando
-    console.log(categoryData)
+    //console.log(categoryData)
 
     var editedData = {}
     var index = null
@@ -56,10 +56,12 @@ const EditExpense = ({data, categoryData, setDataState, edit, setEdit})=>{
         console.log("Richiesta di update: ", editedExpense)
 
         updateData("http://localhost:3000/expenses", editedExpense)
-        .then(e=>{console.log("Dati aggiornati: ", e)})
+        .then(e=>{
+            console.log("Dati aggiornati: ", e)
+            setLoading(true)
+        })
 
         setEdit({isEditing:false, dataID: null})
-        setLoading(true)
     }
     
     return <div className={edit.isEditing ? "flex flex-col absolute w-full shadow-xl rounded-xl bg-white items-stretch basis-full text-sm" : "hidden"}>

@@ -3,7 +3,9 @@ import LoadingContext from "../context/LoadingContext"
 import { useContext, useState } from "react"
 import insertData from "../../jsUtils/insertData"
 
-const InsertExpense = ({data, setDataState, categoryData})=>{
+const InsertExpense = ({categoryData})=>{
+
+    console.log("Refreshato il componente InsertExpense")
 
     // uso contesto per sapere quale utente è loggato
     const [user] = useContext(UserContext)
@@ -45,9 +47,12 @@ const InsertExpense = ({data, setDataState, categoryData})=>{
         }
 
         insertData("http://localhost:3000/expenses", newExpense)
-        .then(e=>{console.log("Dati insertiti: ", e)})
+        .then(e=>{
+            console.log("Dati insertiti: ", e)
+            setLoading(true)
+        })
 
-        setLoading(true)
+
     }
 
     return <div className="flex flex-col items-stretch basis-full text-sm">
