@@ -18,15 +18,16 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
+const options = {
   responsive: true,
   plugins: {
     legend: {
+      display: false,
       position: 'top',
     },
     title: {
       display: true,
-      text: 'Chart.js Bar Chart',
+      text: 'Andamento spese mensili',
     },
   },
 };
@@ -37,7 +38,7 @@ const dataChart = {
   labels: data.monthlyAmount.map(e => e.yearmonth),
   datasets: [
     {
-      label: 'Dataset 1',
+      label: '',
       data: data.monthlyAmount.map(e => e.amount),
       backgroundColor: 'rgba(255, 99, 132, 0.5)',
     },

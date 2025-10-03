@@ -57,24 +57,26 @@ const ExpenseTable = ({data, categoryData})=>{
         )
     })
 
-    return <div className="flex flex-col basis-full shadow-xl inset-shadow-sm rounded-xl p-[10px] text-sm">
+    return <div className="flex flex-col basis-full shadow-xl inset-shadow-sm rounded-xl p-[10px] text-sm overflow-auto max-h-100">
         <div className='relative'>
             <EditExpense data={data} categoryData={categoryData} edit={edit} setEdit={setEdit} />
         </div>
-        <table className="basis-full table-auto">
-            <thead>
-                <tr className="border-b-[0.1px] border-gray-400 text-left font-bold text-base">
-                    <th scope="col">Data</th>
-                    <th scope="col">Categoria</th>
-                    <th scope="col">Descrizione</th>
-                    <th scope="col">Importo</th>
-                    <th scope="col">Azioni</th>
-                </tr>
-            </thead>
-            <tbody>
-                {rows}
-            </tbody>
-        </table>
+        <div className='flex basis-full overflow-auto max-h-100'>
+            <table className="basis-full table-auto">
+                <thead>
+                    <tr className="border-b-[0.1px] border-gray-400 text-left font-bold text-base">
+                        <th scope="col">Data</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Descrizione</th>
+                        <th scope="col">Importo</th>
+                        <th scope="col">Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {rows}
+                </tbody>
+            </table>
+        </div>
     </div>
 }
 

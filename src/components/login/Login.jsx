@@ -13,26 +13,27 @@ const Login = () => {
     const [password, setPassword] = useState("")
     const [mailErr, setMailErr] = useState(false)
     const [passErr, setPassErr] = useState(false)
+    const [loginErr, setLoginErr] = useState({error: false, message: ""})
     
     // funzione per gestire il login
     const handleSubmit = async e=> {
         e.preventDefault()  //per gestire il form non in automatico
 
         // semplice check validità email
-        if(email == null || email == "") {
-            setMailErr(true)
-            return
-        } else {
-            setMailErr(false)
-        }
+        // if(email == null || email == "") {
+        //     setMailErr(true)
+        //     return
+        // } else {
+        //     setMailErr(false)
+        // }
         
         // semplice check validità password
-        if(password == null || password == "") {
-            setPassErr(true)
-            return
-        } else {
-            setPassErr(false)
-        }
+        // if(password == null || password == "") {
+        //     setPassErr(true)
+        //     return
+        // } else {
+        //     setPassErr(false)
+        // }
 
         const result = await (await fetch("http://localhost:3000/login", {
             method : "POST",
@@ -58,6 +59,10 @@ const Login = () => {
             navigate("/")
 
         }else {
+            setLoginErr({
+                error: true,
+                message: result.error
+            })
             console.log(result.error)
         }
     }
@@ -99,6 +104,9 @@ const Login = () => {
                 />
                 <p className='text-red-500'>
                     {passErr && "Inserisci una password valida"}
+                </p>
+                <p className='text-red-500'>
+                    {loginErr.error && loginErr.message}
                 </p>
                  <div className="flex justify-between">
                     <button onClick={handleSubmit} className="font-semibold m-[10px] bg-blue-100 p-[5px] hover:bg-blue-200 rounded-lg">Login</button>

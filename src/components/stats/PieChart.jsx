@@ -3,13 +3,27 @@ import { Pie } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'right',
+    },
+    title: {
+      display: true,
+      text: 'Distribuzione spese per categoria',
+    },
+  },
+};
+
 const PieChart = ({ data })=> {
   
   const dataChart = {
     labels: data.categoryAmount.map(e => e.category),
+    title: "Distribuzione spese per categoria",
     datasets: [
       {
-        label: '',
+        label: 'Distribuzione spese per categoria',
         data: data.categoryAmount.map(e => e.amount),
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
@@ -26,7 +40,7 @@ const PieChart = ({ data })=> {
     ],
   };
   
-  return <Pie className="" data={dataChart} />
+  return <Pie className="" data={dataChart} options={options} />
 
 }
 

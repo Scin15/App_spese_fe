@@ -11,6 +11,7 @@ const Register = () => {
     const [password, setPassword] = useState("")
     const [name, setName] = useState("")
     const [surname, setSurname] = useState("")
+    const [registerError, setRegisterError] = useState({error: false, message: ""})
     
     // funzione per gestire la registrazione
     const handleRegister = async e=> {
@@ -39,7 +40,11 @@ const Register = () => {
 
         } else {
             console.log("Errore nella registrazione")
-            console.log(result.error)
+            console.log(resultBody.error)
+            setRegisterError({
+                error: true,
+                message: resultBody.error
+            })
         }
     }
     
@@ -95,6 +100,9 @@ const Register = () => {
                     placeholder='password'
                     autoComplete={password}
                 />
+                <p className='text-red-500 text-sm'>
+                    {registerError.error && registerError.message}
+                </p>
                  <div className="flex justify-between">
                     <button onClick={handleRegister} className="m-[10px] bg-red-100 p-[5px] hover:bg-red-200 rounded-lg">Registrati</button>
                 </div>

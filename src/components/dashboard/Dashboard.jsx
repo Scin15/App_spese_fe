@@ -74,7 +74,7 @@ function Dashboard() {
             <div>{`Rimasti ${budgetLeft} € su ${expenseData.stats.budget} € budget`}</div>
           </MainCard>
         </div>
-        <div className='flex m-[10px] overflow-auto max-h-100'>
+        <div className='flex m-[10px]'>
           <ExpenseTable data={expenseData.expenseList} categoryData={expenseData.categoryList} />
         </div>
         <div className='shadow-xl inset-shadow-sm rounded-xl flex justify-center m-[10px]'>

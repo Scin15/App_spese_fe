@@ -25,14 +25,13 @@ useEffect(()=>{
 
 }, [])
 
-    return <div className="flex flex-col items-center justify-between font-mono">
+    return <div className="flex flex-col items-start justify-between font-mono">
         <div className="m-[10px] font-bold text-3xl">
-            Pagina statistiche
         </div>
-        <div>
+        <div className='shadow-xl inset-shadow-sm rounded-xl flex justify-center m-[10px] p-[10px]'>
             <PieChart data={data} />
         </div>
-        <div>
+        <div className='shadow-xl inset-shadow-sm rounded-xl flex justify-center m-[10px] p-[10px]'>
             <VBarChart data={data} />
         </div>
     </div>
