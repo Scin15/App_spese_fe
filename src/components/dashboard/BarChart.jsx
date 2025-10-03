@@ -88,12 +88,12 @@ const BarChart = ({data})=> {
       datasets: [
         {
             label: false,
-            data: [data.totalMonth],
+            data: [data.total],
             backgroundColor: 'rgba(4, 201, 232, 0.91)',
         },
         {
             label: false,
-            data: [data.budgetMonth - data.totalMonth],
+            data: [data.budget - data.total],
             backgroundColor: 'rgba(184, 184, 184, 0.5)',
         },
       ],

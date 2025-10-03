@@ -33,7 +33,7 @@ const logOutCallBack = async ()=> {
                 <FontAwesomeIcon icon={faHouseSolid} />
             </NavLink>
 
-            <NavLink to="about" className={({isActive})=>isActive ? "m-[5px] text-blue-700" : "m-[5px] hover:text-gray-500"}>
+            <NavLink to="stats" className={({isActive})=>isActive ? "m-[5px] text-blue-700" : "m-[5px] hover:text-gray-500"}>
                 Statistiche
             </NavLink>
         </div>

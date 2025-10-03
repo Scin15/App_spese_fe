@@ -34,6 +34,9 @@ const ExpenseTable = ({data, categoryData})=>{
         setEdit({isEditing: true, dataID: id})
     }
 
+    // riordino per aver le date decrescenti
+    data.sort((a, b)=> new Date(b.date) - new Date(a.date))
+
     // ritorno le righe della tabella a partire dall'array DB
     const rows = data.map((element)=>{
         return (

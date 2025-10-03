@@ -12,28 +12,27 @@ import UserContext from '../context/UserContext'
 import fetchData from '../../jsUtils/fetchData'
 import SyncIcon from '@mui/icons-material/Sync'
 
-// statistiche mensili da caricare con una GET al server
-const stats = {
-  totalMonth: 520,
-  bestCategory:{name: "cibo", value: 210},
-  budgetMonth: 800,
-}
-
 function Dashboard() {
   
   const [loading, setLoading] = useState(false)
-  const [expenseData, setExpenseData] = useState({expenseList: [], categoryList: []})
+  const [expenseData, setExpenseData] = useState({expenseList: [], categoryList: [], stats: {
+    total: 0,
+    maxCategory: {},
+    budget: 0,}})
   const [user] = useContext(UserContext)
-  const budgetLeft = stats.budgetMonth - stats.totalMonth
+  const budgetLeft = expenseData.stats.budget - expenseData.stats.total
   
   useEffect(()=>{
     
     const loadData = async () => {
       const loadedExpense = await fetchData(`http://localhost:3000/expenses/${user.id}`)
       const loadedCategory = await fetchData("http://localhost:3000/category")
+      const loadStats = await fetchData(`http://localhost:3000/expenses/kpi/${user.id}`)
+
       setExpenseData({
         expenseList: loadedExpense,
-        categoryList: loadedCategory
+        categoryList: loadedCategory,
+        stats: loadStats
       })
       setLoading(false)
     }
@@ -56,26 +55,26 @@ function Dashboard() {
           </button>
         </div>
         <div className='flex justify-between m-[10px]'>
-          <MainCard title="Totale spese del mese">
+          <MainCard title="Totale spese">
             <div>
-              <h1 className='font-bold text-3xl'>{`${stats.totalMonth } €`}</h1>
+              <h1 className='font-bold text-3xl'>{`${expenseData.stats.total} €`}</h1>
             </div>
           </MainCard>
           <MainCard title="Categoria più costosa">
             <div className='flex'>
               <ShoppingCartIcon className='text-blue-800 text-lg m-[5px]'/>
               <div className='flex flex-col m-[5px]'>
-                <h1 className='font-bold text-xl'>{stats.bestCategory.name}</h1>
-                <p>{`${stats.bestCategory.value} €`}</p>
+                <h1 className='font-bold text-xl'>{expenseData.stats.maxCategory.desc}</h1>
+                <p>{`${expenseData.stats.maxCategory.amount} €`}</p>
               </div>
             </div>
           </MainCard>
-          <MainCard title="Saldo obiettivo mensile">
-            <BarChart data={stats} />
-            <div>{`Rimasti ${budgetLeft} € su ${stats.budgetMonth} € budget`}</div>
+          <MainCard title="Saldo obiettivo">
+            <BarChart data={expenseData.stats} />
+            <div>{`Rimasti ${budgetLeft} € su ${expenseData.stats.budget} € budget`}</div>
           </MainCard>
         </div>
-        <div className='flex m-[10px]'>
+        <div className='flex m-[10px] overflow-auto max-h-100'>
           <ExpenseTable data={expenseData.expenseList} categoryData={expenseData.categoryList} />
         </div>
         <div className='shadow-xl inset-shadow-sm rounded-xl flex justify-center m-[10px]'>
