@@ -28,11 +28,22 @@ const options = {
     title: {
       display: true,
       text: 'Andamento spese mensili',
+      color: "#000000cb",
+      font: {
+        weight: "bold",
+        size: 15
+      }
     },
   },
 };
 
 const VBarChart = ({ data }) => {
+
+  // riordino il dataset in base alle date
+  data.monthlyAmount.sort((a, b) => {
+      return new Date(a.yearmonth) - new Date(b.yearmonth)
+    }
+  )
 
 const dataChart = {
   labels: data.monthlyAmount.map(e => e.yearmonth),
@@ -40,12 +51,14 @@ const dataChart = {
     {
       label: '',
       data: data.monthlyAmount.map(e => e.amount),
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      backgroundColor: 'rgba(72, 122, 189, 1)',
     },
   ],
 };
 
-  return <Bar options={options} data={dataChart} />;
+  return <div className='mx-10'>
+    <Bar options={options} data={dataChart} />
+  </div> 
 }
 
 export default VBarChart

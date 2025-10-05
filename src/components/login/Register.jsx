@@ -17,7 +17,7 @@ const Register = () => {
     const handleRegister = async e=> {
         e.preventDefault()  //per gestire il form non in automatico
         
-        const result = await (await fetch("http://localhost:3000/register", {
+        const result = await (await fetch(`${import.meta.env.VITE_END_POINT}/register`, {
             method : "POST",
             credentials : 'include',
             headers : {
@@ -68,7 +68,7 @@ const Register = () => {
         </div>
         <div className="flex flex-col border-black m-[10px]">
             <form className="flex flex-col" onSubmit={handleRegister}>
-                <input
+                <input className='my-1'
                     value={email}
                     onChange={handleChange}
                     type="text"
@@ -76,7 +76,7 @@ const Register = () => {
                     placeholder='email'
                     autoComplete={email}
                 />
-                <input
+                <input className='my-1'
                     value={name}
                     onChange={handleChange}
                     type="text"
@@ -84,7 +84,7 @@ const Register = () => {
                     placeholder='name'
                     autoComplete={name}
                 />
-                <input
+                <input className='my-1'
                     value={surname}
                     onChange={handleChange}
                     type="text"
@@ -92,7 +92,7 @@ const Register = () => {
                     placeholder='surname'
                     autoComplete={surname}
                 />
-                <input
+                <input className='my-1'
                     value={password}
                     onChange={handleChange}
                     type="password"
@@ -103,7 +103,7 @@ const Register = () => {
                 <p className='text-red-500 text-sm'>
                     {registerError.error && registerError.message}
                 </p>
-                 <div className="flex justify-between">
+                 <div className="flex justify-center">
                     <button onClick={handleRegister} className="m-[10px] bg-red-100 p-[5px] hover:bg-red-200 rounded-lg">Registrati</button>
                 </div>
             </form>

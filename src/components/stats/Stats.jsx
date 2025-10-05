@@ -16,7 +16,7 @@ useEffect(()=>{
 
     const loadData = async () => {
 
-        const stats = await fetchData(`http://localhost:3000/expenses/stats/${user.id}`)
+        const stats = await fetchData(`${import.meta.env.VITE_END_POINT}/expenses/stats/${user.id}`)
         console.log("Statistiche caricate:", stats)
         setData(stats) 
     }
@@ -25,13 +25,11 @@ useEffect(()=>{
 
 }, [])
 
-    return <div className="flex flex-col items-start justify-between font-mono">
-        <div className="m-[10px] font-bold text-3xl">
-        </div>
-        <div className='shadow-xl inset-shadow-sm rounded-xl flex justify-center m-[10px] p-[10px]'>
+    return <div className="flex flex-col items-start justify-center">
+        <div className='shadow-xl inset-shadow-sm rounded-xl flex items-start m-[10px] p-[10px] w-full'>
             <PieChart data={data} />
         </div>
-        <div className='shadow-xl inset-shadow-sm rounded-xl flex justify-center m-[10px] p-[10px]'>
+        <div className='shadow-xl inset-shadow-sm rounded-xl flex items-start m-[10px] p-[10px] w-full'>
             <VBarChart data={data} />
         </div>
     </div>

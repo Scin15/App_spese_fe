@@ -21,7 +21,7 @@ const ExpenseTable = ({data, categoryData})=>{
         //const index = data.findIndex(e=>e.id === id)
         //setto lo stato con un array senza il valore trovato (toSpliced() ritorna un nuovo array)
         //setDataState((data)=>data.toSpliced(index,1))
-        deleteData("http://localhost:3000/expenses", {id: id})
+        deleteData(`${import.meta.env.VITE_END_POINT}/expenses`, {id: id})
         .then((e)=>{
             console.log("Spesa cancellata:", e)
             setLoading(true)
@@ -64,7 +64,7 @@ const ExpenseTable = ({data, categoryData})=>{
         <div className='flex basis-full overflow-auto max-h-100'>
             <table className="basis-full table-auto">
                 <thead>
-                    <tr className="border-b-[0.1px] border-gray-400 text-left font-bold text-base">
+                    <tr className="border-b-[0.1px] border-gray-400 text-left font-semibold text-base">
                         <th scope="col">Data</th>
                         <th scope="col">Categoria</th>
                         <th scope="col">Descrizione</th>

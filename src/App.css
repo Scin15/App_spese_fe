@@ -1,1 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 @import 'tailwindcss';
+
+@theme {
+  --font-roboto: "Roboto", sans-serif; 
+}
+
+input, select{
+    border: 0.1px rgb(168, 168, 168) solid;
+    border-radius: 3px;
+}
+
+input:hover, select:hover{
+    border: 0.1px black solid;
+}

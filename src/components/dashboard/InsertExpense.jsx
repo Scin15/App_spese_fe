@@ -46,7 +46,7 @@ const InsertExpense = ({categoryData})=>{
             return
         }
 
-        insertData("http://localhost:3000/expenses", newExpense)
+        insertData(`${import.meta.env.VITE_END_POINT}/expenses`, newExpense)
         .then(e=>{
             console.log("Dati insertiti: ", e)
             setLoading(true)
@@ -56,8 +56,8 @@ const InsertExpense = ({categoryData})=>{
     }
 
     return <div className="flex flex-col items-stretch basis-full text-sm">
-        <div className="ml-[10px] mt-[10px] mr-[10px] text-bold text-base">
-            Inserisci nuova spesa per utente: {user.mail}
+        <div className="ml-[10px] mt-[10px] mr-[10px] font-semibold text-base">
+            Inserisci nuova spesa
         </div>
             <form action="" className="flex flex-col items-stretch m-[10px]">
                 <div className="flex justify-between">
@@ -83,7 +83,7 @@ const InsertExpense = ({categoryData})=>{
                     </div>
                 </div>
                 <div className="flex justify-end mr-[10px] mt-[10px]">
-                    <button className='font-semibold m-[2px] bg-blue-100 p-[5px] hover:bg-blue-200 rounded-lg' onClick={insertExpense}>Inserisci</button>
+                    <button className='font-normal m-[2px] bg-blue-100 p-[5px] hover:bg-blue-200 rounded-lg' onClick={insertExpense}>Inserisci</button>
                 </div>
             </form>
     </div>

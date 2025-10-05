@@ -25,9 +25,9 @@ function Dashboard() {
   useEffect(()=>{
     
     const loadData = async () => {
-      const loadedExpense = await fetchData(`http://localhost:3000/expenses/${user.id}`)
-      const loadedCategory = await fetchData("http://localhost:3000/category")
-      const loadStats = await fetchData(`http://localhost:3000/expenses/kpi/${user.id}`)
+      const loadedExpense = await fetchData(`${import.meta.env.VITE_END_POINT}/expenses/${user.id}`)
+      const loadedCategory = await fetchData(`${import.meta.env.VITE_END_POINT}/category`)
+      const loadStats = await fetchData(`${import.meta.env.VITE_END_POINT}/expenses/kpi/${user.id}`)
 
       setExpenseData({
         expenseList: loadedExpense,
@@ -50,7 +50,7 @@ function Dashboard() {
     <LoadingContext value={[loading, setLoading]}>
       <div className='flex flex-col p-[10px] rounded-lg m-[30px]'>
         <div>
-          <button className='ml-2 bg-blue-100 p-[5px] hover:bg-blue-200 rounded-lg' onClick={()=>{setLoading(true)}}>
+          <button className='ml-4 bg-blue-100 p-[5px] hover:bg-blue-200 rounded-lg' onClick={()=>{setLoading(true)}}>
             <SyncIcon />
           </button>
         </div>

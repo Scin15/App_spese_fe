@@ -55,7 +55,7 @@ const EditExpense = ({data, categoryData, edit, setEdit})=>{
 
         console.log("Richiesta di update: ", editedExpense)
 
-        updateData("http://localhost:3000/expenses", editedExpense)
+        updateData(`${import.meta.env.VITE_END_POINT}/expenses`, editedExpense)
         .then(e=>{
             console.log("Dati aggiornati: ", e)
             setLoading(true)
@@ -99,7 +99,7 @@ const EditExpense = ({data, categoryData, edit, setEdit})=>{
                     </div>
                 </div>
                 <div className="flex justify-end mr-[10px] mt-[10px]">
-                    <button className="font-semibold m-[10px] bg-blue-100 p-[5px] hover:bg-blue-200 rounded-lg" onClick={EditExpense}>Modifica</button>
+                    <button className="font-normal m-[10px] bg-blue-100 p-[5px] hover:bg-blue-200 rounded-lg" onClick={EditExpense}>Modifica</button>
                 </div>
             </form>
     </div>

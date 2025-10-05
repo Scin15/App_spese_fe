@@ -1,5 +1,5 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Pie } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -8,10 +8,22 @@ const options = {
   plugins: {
     legend: {
       position: 'right',
+      labels:{
+        color: "#000000cb",
+        font: {
+          weight: "bold",
+          size: 12
+        }
+      }
     },
     title: {
       display: true,
       text: 'Distribuzione spese per categoria',
+      color: "#000000cb",
+      font: {
+        weight: "bold",
+        size: 15
+      }
     },
   },
 };
@@ -26,21 +38,19 @@ const PieChart = ({ data })=> {
         label: 'Distribuzione spese per categoria',
         data: data.categoryAmount.map(e => e.amount),
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-        ],
-        borderWidth: 1,
+        'rgba(0, 83, 192, 1)',
+        'rgba(72, 122, 189, 1)',
+        'rgba(111, 145, 189, 1)',
+        'rgba(130, 156, 190, 1)',
+        'rgba(177, 184, 194, 1)'
+      ],
       },
     ],
   };
   
-  return <Pie className="" data={dataChart} options={options} />
+  return <div className='mx-10'>
+    <Doughnut data={dataChart} options={options} />
+  </div> 
 
 }
 

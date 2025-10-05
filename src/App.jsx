@@ -12,7 +12,7 @@ function App() {
 
   useEffect(()=>{
     async function checkRefreshToken() {
-      const result = await (await fetch("http://localhost:3000/refresh_token", {
+      const result = await (await fetch(`${import.meta.env.VITE_END_POINT}/refresh_token`, {
         method : "POST",
         credentials : "include",
         headers : {
@@ -42,7 +42,7 @@ function App() {
   if (loading) return <div>Loading...</div>
 
   return (
-    <div className="flex flex-col h-screen m-auto max-w-250 border-x-1 border-gray-300 px-5">
+    <div className="flex flex-col h-screen m-auto max-w-250 border-x-1 border-gray-300 px-5 font-roboto">
       <UserContext value={[user, setUser]}>
         <Header />
         <Outlet />

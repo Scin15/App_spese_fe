@@ -16,7 +16,7 @@ const Header = () => {
 
     // Logout Callback funtion
 const logOutCallBack = async ()=> {
-    await (fetch("http://localhost:3000/logout",{
+    await (fetch(`${import.meta.env.VITE_END_POINT}/logout`,{
         method : "POST",
         credentials : "include"
     }))
@@ -26,7 +26,7 @@ const logOutCallBack = async ()=> {
     navigate("/")
 } 
 
-    return <div className="flex justify-between h-[50px] font-mono font-semibold text-2xl text-gray-800">
+    return <div className="flex justify-between h-[50px] font-[700] text-2xl text-gray-800">
         
         <div className="flex items-center">
             <NavLink to="/" className={({isActive})=>isActive ? "m-[5px] text-blue-700" : "m-[5px] hover:text-gray-500"}>
@@ -34,7 +34,7 @@ const logOutCallBack = async ()=> {
             </NavLink>
 
             <NavLink to="stats" className={({isActive})=>isActive ? "m-[5px] text-blue-700" : "m-[5px] hover:text-gray-500"}>
-                Statistiche
+                Riepilogo
             </NavLink>
         </div>
 

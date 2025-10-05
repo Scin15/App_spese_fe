@@ -35,7 +35,7 @@ const Login = () => {
         //     setPassErr(false)
         // }
 
-        const result = await (await fetch("http://localhost:3000/login", {
+        const result = await (await fetch(`${import.meta.env.VITE_END_POINT}/login`, {
             method : "POST",
             credentials : 'include',
             headers : {
@@ -83,7 +83,7 @@ const Login = () => {
         </div>
         <div className="flex flex-col border-black m-[10px]">
             <form className="flex flex-col" onSubmit={handleSubmit}>
-                <input
+                <input className='my-2'
                     value={email}
                     onChange={handleChange}
                     type="text"
@@ -94,7 +94,7 @@ const Login = () => {
                 <p className='text-red-500'>
                     {mailErr && "Inserisci una mail valida"}
                 </p>
-                <input
+                <input className='my-2'
                     value={password}
                     onChange={handleChange}
                     type="password"
