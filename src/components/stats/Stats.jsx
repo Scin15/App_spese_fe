@@ -16,7 +16,7 @@ useEffect(()=>{
 
     const loadData = async () => {
 
-        const stats = await fetchData(`${import.meta.env.VITE_END_POINT}/expenses/stats/${user.id}`)
+        const stats = await fetchData(`${import.meta.env.VITE_END_POINT}/expenses/stats`, user.accessToken)
         console.log("Statistiche caricate:", stats)
         setData(stats) 
     }

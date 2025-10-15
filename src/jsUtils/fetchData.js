@@ -1,8 +1,14 @@
 
-export default async function fetchData(url) {
+export default async function fetchData(url, token) {
 
         try{
-            const response = await fetch(url)
+            const response = await fetch(url, {
+                credentials : "include",
+                headers: {
+                    "content-type": "application/json",
+                    authorization: `Bearer ${token}`
+                }
+            })
             if(!response.ok){
                 throw new Error
             }

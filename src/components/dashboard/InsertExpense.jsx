@@ -46,7 +46,7 @@ const InsertExpense = ({categoryData})=>{
             return
         }
 
-        insertData(`${import.meta.env.VITE_END_POINT}/expenses`, newExpense)
+        insertData(`${import.meta.env.VITE_END_POINT}/expenses`, newExpense, user.accessToken)
         .then(e=>{
             console.log("Dati insertiti: ", e)
             setLoading(true)

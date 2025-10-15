@@ -1,5 +1,5 @@
 
-export default async function insertData(url, data) {
+export default async function insertData(url, data, token) {
 
     const { userid, category_id, amount, note, date } = data
     console.log("Data da inserire: ", data)
@@ -9,7 +9,8 @@ export default async function insertData(url, data) {
                 method: "POST",
                 credentials : "include",
                 headers: {
-                    "content-type" : "application/json"
+                    "content-type" : "application/json",
+                    authorization: `Bearer ${token}`
                 },
                 body: JSON.stringify({
                     userid: Number(userid),

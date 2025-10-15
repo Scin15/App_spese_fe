@@ -1,5 +1,5 @@
 
-export default async function updateData(url, data) {
+export default async function updateData(url, data, token) {
 
     const { id, category_id, amount, note, date } = data
     console.log("Dati da aggiornare: ", data)
@@ -9,7 +9,8 @@ export default async function updateData(url, data) {
                 method: "PUT",
                 credentials : "include",
                 headers: {
-                    "content-type" : "application/json"
+                    "content-type" : "application/json",
+                    authorization: `Bearer ${token}`
                 },
                 body: JSON.stringify({
                     id: Number(id),

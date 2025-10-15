@@ -1,5 +1,5 @@
 
-export default async function deleteData(url, data) {
+export default async function deleteData(url, data, token) {
 
     const { id} = data
     console.log("Id da cancellare: ", data)
@@ -9,7 +9,8 @@ export default async function deleteData(url, data) {
                 method: "DELETE",
                 credentials : "include",
                 headers: {
-                    "content-type" : "application/json"
+                    "content-type" : "application/json",
+                    authorization: `Bearer ${token}`
                 },
                 body: JSON.stringify({
                     id: Number(id)

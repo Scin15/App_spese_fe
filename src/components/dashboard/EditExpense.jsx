@@ -3,12 +3,14 @@ import { options } from './BarChart'
 import updateData from '../../jsUtils/updateData'
 import { useContext, useState } from 'react'
 import LoadingContext from '../context/LoadingContext'
+import UserContext from '../context/UserContext'
 
 const EditExpense = ({data, categoryData, edit, setEdit})=>{
 
     console.log("Refreshato il componente EditExpense")
 
     const [loading, setLoading] = useContext(LoadingContext)
+    const [user] = useContext(UserContext)
     const [dateErr, setDateErr] = useState(false)
     const [importErr, setImportErr] = useState(false)
 
@@ -55,7 +57,7 @@ const EditExpense = ({data, categoryData, edit, setEdit})=>{
 
         console.log("Richiesta di update: ", editedExpense)
 
-        updateData(`${import.meta.env.VITE_END_POINT}/expenses`, editedExpense)
+        updateData(`${import.meta.env.VITE_END_POINT}/expenses`, editedExpense, user.accessToken)
         .then(e=>{
             console.log("Dati aggiornati: ", e)
             setLoading(true)

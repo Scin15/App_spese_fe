@@ -7,8 +7,6 @@ import { useNavigate } from 'react-router'
 import { useContext } from 'react'
 import UserContext from './context/UserContext.jsx'
 
-
-
 const Header = () => {
 
     const [user, setUser] = useContext(UserContext)
@@ -33,9 +31,10 @@ const logOutCallBack = async ()=> {
                 <FontAwesomeIcon icon={faHouseSolid} />
             </NavLink>
 
+            {user.accessToken && 
             <NavLink to="stats" className={({isActive})=>isActive ? "m-[5px] text-blue-700" : "m-[5px] hover:text-gray-500"}>
                 Riepilogo
-            </NavLink>
+            </NavLink>}
         </div>
 
         <div className="flex items-center">

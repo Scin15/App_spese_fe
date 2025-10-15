@@ -1,18 +1,20 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import { Button } from '@mui/material';
-import EditExpense from './EditExpense';
+import DeleteIcon from '@mui/icons-material/Delete'
+import ModeEditIcon from '@mui/icons-material/ModeEdit'
+import { Button } from '@mui/material'
+import EditExpense from './EditExpense'
 import { 
     useState, 
-    useContext} from 'react';
-import deleteData from '../../jsUtils/deleteData';
-import LoadingContext from '../context/LoadingContext';
+    useContext} from 'react'
+import deleteData from '../../jsUtils/deleteData'
+import LoadingContext from '../context/LoadingContext'
+import UserContext from '../context/UserContext'
 
 const ExpenseTable = ({data, categoryData})=>{
 
     console.log("Refreshato il componente ExpenseTable")
 
     const [loading, setLoading] = useContext(LoadingContext)
+    const [user] = useContext(UserContext)
     const [edit, setEdit] = useState({isEditing: false, dataID: null})
 
     // questa funzione dovrà rimuovere la spesa dal DB facendo una chiamata DELETE al server e passando l'ID
@@ -21,7 +23,7 @@ const ExpenseTable = ({data, categoryData})=>{
         //const index = data.findIndex(e=>e.id === id)
         //setto lo stato con un array senza il valore trovato (toSpliced() ritorna un nuovo array)
         //setDataState((data)=>data.toSpliced(index,1))
-        deleteData(`${import.meta.env.VITE_END_POINT}/expenses`, {id: id})
+        deleteData(`${import.meta.env.VITE_END_POINT}/expenses`, {id: id}, user.accessToken)
         .then((e)=>{
             console.log("Spesa cancellata:", e)
             setLoading(true)
