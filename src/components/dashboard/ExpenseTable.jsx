@@ -63,8 +63,8 @@ const ExpenseTable = ({data, categoryData})=>{
         )
     })
 
-    return <div className="flex flex-col basis-full shadow-xl inset-shadow-sm rounded-xl p-[10px] text-sm overflow-auto max-h-100">
-        <div className=''>
+    return <div className="flex flex-col basis-full shadow-xl inset-shadow-sm rounded-xl p-[10px] text-sm overflow-auto max-h-200 md:max-h-100">
+        <div className='flex flex-col md:flex-row md:items-center'>
             <label htmlFor="filter">Categoria</label>
             <input type="text" className='shadow-xl m-2' id='filter' onChange={(e)=> setCategoryFilter(e.target.value)} />
             <label htmlFor="filter">Descrizione</label>
@@ -76,7 +76,7 @@ const ExpenseTable = ({data, categoryData})=>{
         <div className='flex basis-full overflow-auto max-h-100'>
             <table className="basis-full table-auto">
                 <thead>
-                    <tr className="border-b-[0.1px] border-gray-400 text-left font-semibold text-base">
+                    <tr className="border-b-[0.1px] border-gray-400 text-left font-semibold md:text-base p-10">
                         <th scope="col">Data</th>
                         <th scope="col">Categoria</th>
                         <th scope="col">Descrizione</th>

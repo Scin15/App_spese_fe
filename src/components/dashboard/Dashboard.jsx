@@ -48,23 +48,23 @@ function Dashboard() {
 
   return (
     <LoadingContext value={[loading, setLoading]}>
-      <div className='flex flex-col p-[10px] rounded-lg m-[30px]'>
+      <div className='flex flex-col md:p-[10px] rounded-lg md:m-[30px]'>
         <div>
-          <button className='ml-4 bg-blue-100 p-[5px] hover:bg-blue-200 rounded-lg' onClick={()=>{setLoading(true)}}>
+          <button className='mt-5 ml-4 bg-blue-100 md:p-[5px] hover:bg-blue-200 rounded-lg' onClick={()=>{setLoading(true)}}>
             <SyncIcon />
           </button>
         </div>
-        <div className='flex justify-between m-[10px]'>
+        <div className='flex flex-wrap md:flex-nowrap m-[10px]'>
           <MainCard title="Totale spese">
             <div>
-              <h1 className='font-bold text-3xl'>{`${expenseData.stats.total} €`}</h1>
+              <h1 className='font-bold text-xs md:text-3xl'>{`${expenseData.stats.total} €`}</h1>
             </div>
           </MainCard>
           <MainCard title="Categoria più costosa">
             <div className='flex'>
               <ShoppingCartIcon className='text-blue-800 text-lg m-[5px]'/>
               <div className='flex flex-col m-[5px]'>
-                <h1 className='font-bold text-xl'>{expenseData.stats.maxCategory.desc}</h1>
+                <h1 className='font-bold text-xs md:text-xl'>{expenseData.stats.maxCategory.desc}</h1>
                 <p>{`${expenseData.stats.maxCategory.amount} €`}</p>
               </div>
             </div>

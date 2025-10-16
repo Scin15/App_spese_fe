@@ -24,7 +24,7 @@ const logOutCallBack = async ()=> {
     navigate("/")
 } 
 
-    return <div className="flex justify-between h-[50px] font-[700] text-2xl text-gray-800">
+    return <div className="flex justify-between h-[50px] font-[700] text-xl md:text-2xl text-gray-800">
         
         <div className="flex items-center">
             <NavLink to="/" className={({isActive})=>isActive ? "m-[5px] text-blue-700" : "m-[5px] hover:text-gray-500"}>

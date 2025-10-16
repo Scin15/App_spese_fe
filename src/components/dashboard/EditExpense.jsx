@@ -78,7 +78,7 @@ const EditExpense = ({data, categoryData, edit, setEdit})=>{
             </button>
         </div>
             <form action="" className="flex flex-col items-stretch m-[10px]">
-                <div className="flex justify-between">
+                <div className="flex flex-col md:flex-row justify-between">
                     <div className="flex flex-col">
                         <label htmlFor="data">Data</label>
                         <input key={edit.dataID} type="date" name="data" defaultValue={editedData.date?.substring(0,10)}></input>

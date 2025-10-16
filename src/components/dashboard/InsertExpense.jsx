@@ -60,7 +60,7 @@ const InsertExpense = ({categoryData})=>{
             Inserisci nuova spesa
         </div>
             <form action="" className="flex flex-col items-stretch m-[10px]">
-                <div className="flex justify-between">
+                <div className="flex flex-col md:flex-row justify-between">
                     <div className="flex flex-col">
                         <label htmlFor="data">Data</label>
                         <input type="date" required name="data" />

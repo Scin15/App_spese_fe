@@ -78,8 +78,8 @@ const Login = () => {
 
     return <div className="flex flex-col items-center justify-between font-mono rounded-xl mx-auto p-10 shadow-xl">
         <div className="m-[10px] font-bold text-3xl">
-            <h1 className=''>Login</h1>
-            <p className='text-sm mt-5'>Effettua l'accesso per gestire le tue spese</p>
+            <h1 className='text-center'>Login</h1>
+            <p className='text-center text-sm mt-5'>Effettua l'accesso per gestire le tue spese</p>
         </div>
         <div className="flex flex-col border-black m-[10px]">
             <form className="flex flex-col" onSubmit={handleSubmit}>

@@ -99,7 +99,7 @@ const BarChart = ({data})=> {
       ],
     }
     
-    return <Bar className="" options={options} data={chartData} />
+    return <Bar className="md:max-w-60 max-w-70 " options={options} data={chartData} />
 }
 
 export default BarChart

@@ -25,7 +25,7 @@ useEffect(()=>{
 
 }, [])
 
-    return <div className="flex flex-col items-start justify-center">
+    return <div className="flex flex-col items-center">
         <div className='shadow-xl inset-shadow-sm rounded-xl flex items-start m-[10px] p-[10px] w-full'>
             <PieChart data={data} />
         </div>

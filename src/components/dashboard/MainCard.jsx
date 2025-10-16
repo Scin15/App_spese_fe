@@ -1,6 +1,6 @@
 
 const MainCard = ({title, children})=>{
-    return <div className="basis-full flex flex-col shadow-xl p-[10px] m-[10px] rounded-lg">
+    return <div className="text-sm md:text-base md:basis-full flex flex-col shadow-xl p-[10px] m-[10px] rounded-lg">
         <div className="">
             <h2 className="m-[5px] font-semibold">{title}</h2>
         </div>

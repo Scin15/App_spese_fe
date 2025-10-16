@@ -56,7 +56,7 @@ const dataChart = {
   ],
 };
 
-  return <div className='mx-10'>
+  return <div className='md:mx-10'>
     <Bar options={options} data={dataChart} />
   </div> 
 }

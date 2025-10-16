@@ -42,7 +42,7 @@ function App() {
   if (loading) return <div>Loading...</div>
 
   return (
-    <div className="flex flex-col h-screen m-auto max-w-250 border-x-1 border-gray-300 px-5 font-roboto">
+    <div className="flex flex-col h-screen md:m-auto md:max-w-250 border-x-1 border-gray-300 px-5 font-roboto">
       <UserContext value={[user, setUser]}>
         <Header />
         <Outlet />

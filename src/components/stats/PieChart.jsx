@@ -48,7 +48,7 @@ const PieChart = ({ data })=> {
     ],
   };
   
-  return <div className='mx-10'>
+  return <div className='md:mx-10'>
     <Doughnut data={dataChart} options={options} />
   </div> 
 
