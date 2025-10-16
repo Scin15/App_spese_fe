@@ -16,6 +16,8 @@ const ExpenseTable = ({data, categoryData})=>{
     const [loading, setLoading] = useContext(LoadingContext)
     const [user] = useContext(UserContext)
     const [edit, setEdit] = useState({isEditing: false, dataID: null})
+    const [categoryFilter, setCategoryFilter] = useState("")
+    const [descFilter, setDescFilter] = useState("")
 
     // questa funzione dovrà rimuovere la spesa dal DB facendo una chiamata DELETE al server e passando l'ID
     const removeExpense = (id)=>{
@@ -40,7 +42,9 @@ const ExpenseTable = ({data, categoryData})=>{
     data.sort((a, b)=> new Date(b.date) - new Date(a.date))
 
     // ritorno le righe della tabella a partire dall'array DB
-    const rows = data.map((element)=>{
+    const rows = data.filter((element)=> {
+        return element.category.category.toLowerCase().includes(categoryFilter.toLowerCase()) && element.note.toLowerCase().includes(descFilter.toLowerCase())
+    }).map((element)=>{
         return (
         <tr key={element.id} className="border-b-[0.1px] border-gray-400 capitalize">
             <td>{element.date?.substring(0, 10)}</td>
@@ -60,6 +64,12 @@ const ExpenseTable = ({data, categoryData})=>{
     })
 
     return <div className="flex flex-col basis-full shadow-xl inset-shadow-sm rounded-xl p-[10px] text-sm overflow-auto max-h-100">
+        <div className=''>
+            <label htmlFor="filter">Categoria</label>
+            <input type="text" className='shadow-xl m-2' id='filter' onChange={(e)=> setCategoryFilter(e.target.value)} />
+            <label htmlFor="filter">Descrizione</label>
+            <input type="text" className='shadow-xl m-2' id='filter' onChange={(e)=> setDescFilter(e.target.value)} />
+        </div>
         <div className='relative'>
             <EditExpense data={data} categoryData={categoryData} edit={edit} setEdit={setEdit} />
         </div>
