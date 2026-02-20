@@ -41,11 +41,13 @@ const EditExpense = ({data, categoryData, edit, setEdit})=>{
             amount: event.target.form[3].value,
         }
 
-        // controllo che sia inserita una data valida (non nulla e lungezza che rispetta il formato ISO 8601)
-        if (editedExpense.date == null || editedExpense.date == "" || editedExpense.date.length > 10){
-            console.log("La data è vuota!")
-            setDateErr(true)
-            return
+        const today = new Date();
+        const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+        const convertedDate = new Date(editedExpense.date);
+        // controllo che sia inserita una data valida (non nulla e lungezza che rispetta il formato ISO 8601). Controllo anche che la data inserita non sia successiva al giorno in cui la sto inserendo.
+        if (!editedExpense.date || editedExpense.date.length > 10 || convertedDate >= tomorrow){
+            setDateErr(true);
+            return;
         }
         
         // controllo che sia inserito un valore non nullo per l'importo

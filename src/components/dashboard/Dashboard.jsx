@@ -25,9 +25,9 @@ function Dashboard() {
   useEffect(()=>{
     
     const loadData = async () => {
-      const loadedExpense = await fetchData(`${import.meta.env.VITE_END_POINT}/expenses`, user.accessToken)
-      const loadedCategory = await fetchData(`${import.meta.env.VITE_END_POINT}/category`, user.accessToken)
-      const loadStats = await fetchData(`${import.meta.env.VITE_END_POINT}/expenses/kpi/`, user.accessToken)
+      const loadedExpense = await fetchData(`${import.meta.env.VITE_END_POINT}/expenses`, user.accessToken);
+      const loadedCategory = await fetchData(`${import.meta.env.VITE_END_POINT}/category`, user.accessToken);
+      const loadStats = await fetchData(`${import.meta.env.VITE_END_POINT}/expenses/kpi`, user.accessToken);
 
       setExpenseData({
         expenseList: loadedExpense,

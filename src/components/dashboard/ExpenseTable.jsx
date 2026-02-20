@@ -8,6 +8,7 @@ import {
 import deleteData from '../../jsUtils/deleteData'
 import LoadingContext from '../context/LoadingContext'
 import UserContext from '../context/UserContext'
+import { distinctArray } from '../../jsUtils/utils'
 
 const ExpenseTable = ({data, categoryData})=>{
 
@@ -17,7 +18,12 @@ const ExpenseTable = ({data, categoryData})=>{
     const [user] = useContext(UserContext)
     const [edit, setEdit] = useState({isEditing: false, dataID: null})
     const [categoryFilter, setCategoryFilter] = useState("")
-    const [descFilter, setDescFilter] = useState("")
+    const [descFilter, setDescFilter] = useState("");
+    const [yearFilter, setYearFilter] = useState("");
+    const [monthFilter, setMonthFilter] = useState("");
+
+    console.log(yearFilter);
+    console.log(monthFilter);
 
     // questa funzione dovrà rimuovere la spesa dal DB facendo una chiamata DELETE al server e passando l'ID
     const removeExpense = (id)=>{
@@ -30,7 +36,6 @@ const ExpenseTable = ({data, categoryData})=>{
             console.log("Spesa cancellata:", e)
             setLoading(true)
         })
-
     }
 
     const editExpense = (id)=> {
@@ -39,11 +44,14 @@ const ExpenseTable = ({data, categoryData})=>{
     }
 
     // riordino per aver le date decrescenti
-    data.sort((a, b)=> new Date(b.date) - new Date(a.date))
+    data.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     // ritorno le righe della tabella a partire dall'array DB
     const rows = data.filter((element)=> {
+        console.log(new Date(element.date).getFullYear())
         return element.category.category.toLowerCase().includes(categoryFilter.toLowerCase()) && element.note.toLowerCase().includes(descFilter.toLowerCase())
+        && (yearFilter ? new Date(element.date).getFullYear() === Number(yearFilter) : true)
+        && (monthFilter ? new Date(element.date).getMonth() === Number(monthFilter) : true)
     }).map((element)=>{
         return (
         <tr key={element.id} className="border-b-[0.1px] border-gray-400 capitalize">
@@ -69,11 +77,26 @@ const ExpenseTable = ({data, categoryData})=>{
             <input type="text" className='shadow-xl m-2' id='filter' onChange={(e)=> setCategoryFilter(e.target.value)} />
             <label htmlFor="filter">Descrizione</label>
             <input type="text" className='shadow-xl m-2' id='filter' onChange={(e)=> setDescFilter(e.target.value)} />
+            <div className='flex items-center'>
+                <label htmlFor="year">Anno</label>
+                <select className='shadow-xl m-2' name='year' id='year' onChange={(e)=> setYearFilter(e.target.value)}>
+                    <option value=""></option>
+                    {distinctArray(data.map((e) => {const year = new Date(e.date).getFullYear();
+                    return (year);})).map((e) => <option key={e} value={e}>{e}</option>)
+                }
+                </select>
+                <label htmlFor="month">Mese</label>
+                <select className='shadow-xl m-2' name='month' id='month' onChange={(e)=> setMonthFilter(e.target.value)}>
+                    <option value=""></option>
+                    {[0,1,2,3,4,5,6,7,8,9,10,11].map((e) => <option key={e} value={e}>{e+1}</option>)
+                    }
+                </select>
+            </div>
         </div>
         <div className='relative'>
             <EditExpense data={data} categoryData={categoryData} edit={edit} setEdit={setEdit} />
         </div>
-        <div className='flex basis-full overflow-auto max-h-100'>
+        <div className='flex basis-full overflow-auto max-h-100 mt-[1rem]'>
             <table className="basis-full table-auto">
                 <thead>
                     <tr className="border-b-[0.1px] border-gray-400 text-left font-semibold md:text-base p-10">
