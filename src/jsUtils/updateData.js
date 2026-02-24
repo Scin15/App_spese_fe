@@ -1,8 +1,9 @@
 
 export default async function updateData(url, data, token) {
-
+    // l'id può essere singolo oppure un array
     const { id, category_id, amount, note, date } = data
-    console.log("Dati da aggiornare: ", data)
+    console.log("Dati da aggiornare: ", data);
+    console.log("I da aggiornare: ", id);
 
         try{
             const response = await fetch(url, {

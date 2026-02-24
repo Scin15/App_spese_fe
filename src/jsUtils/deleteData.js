@@ -1,8 +1,8 @@
 
 export default async function deleteData(url, data, token) {
-
-    const { id} = data
-    console.log("Id da cancellare: ", data)
+    // può essere un id singolo oppure un array
+    const { id } = data
+    console.log("Id da cancellare: ", id)
 
         try{
             const response = await fetch(url, {
@@ -13,7 +13,7 @@ export default async function deleteData(url, data, token) {
                     authorization: `Bearer ${token}`
                 },
                 body: JSON.stringify({
-                    id: Number(id)
+                    id: Array.isArray(id) ? id : Number(id)
                 })
             })
             if(!response.ok){

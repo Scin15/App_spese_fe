@@ -10,6 +10,22 @@ import LoadingContext from '../context/LoadingContext'
 import UserContext from '../context/UserContext'
 import { distinctArray } from '../../jsUtils/utils'
 
+/* implementazioni: ----------
+
+1. check per selezionare più spese o anche tutte per eliminarle o modificarle in un colpo solo. Inserisco bottoni rimuovi-selezionati e modifica-selezionati;
+2. bottone per ordinamento per prezzo e per data;
+2. inserimento opzione per caricamento file per ogni spesa;
+3. riformulo le statistiche. Voglio aver la possibilità di filtrare su mese, anno, categoria, sia su grafico a torta che su grafico a barre. 
+4. verificare perchè non viene aggiurnato il budget utente;
+5. categorie inseribili dall'utente nel suo pannello;
+
+Nice to have:
+
+1. Vista generale selezionabile su anno, mese, totale; Devo però introdurre un budget mensile che poi verrà sommato per formare quello annuale? Budget totale separato o somma dei budget annuali?
+2. Grafico a linea per visualizzare meglio il trend;
+
+---------- */
+
 const ExpenseTable = ({data, categoryData})=>{
 
     console.log("Refreshato il componente ExpenseTable")
@@ -21,9 +37,7 @@ const ExpenseTable = ({data, categoryData})=>{
     const [descFilter, setDescFilter] = useState("");
     const [yearFilter, setYearFilter] = useState("");
     const [monthFilter, setMonthFilter] = useState("");
-
-    console.log(yearFilter);
-    console.log(monthFilter);
+    const [selected, setSelected] = useState([]);
 
     // questa funzione dovrà rimuovere la spesa dal DB facendo una chiamata DELETE al server e passando l'ID
     const removeExpense = (id)=>{
@@ -43,6 +57,18 @@ const ExpenseTable = ({data, categoryData})=>{
         setEdit({isEditing: true, dataID: id})
     }
 
+    const addSelected = (id) => {
+        const index = selected.findIndex((e)=>e===id);
+        if (index === -1) {
+            // se non ho già l'id nell'array lo aggiungo in fondo
+            setSelected([...selected, id]);
+            return;
+        }
+        const newArray = [...selected];
+        newArray.splice(index, 1);
+        setSelected(newArray);
+    }
+
     // riordino per aver le date decrescenti
     data.sort((a, b) => new Date(b.date) - new Date(a.date));
 
@@ -55,6 +81,7 @@ const ExpenseTable = ({data, categoryData})=>{
     }).map((element)=>{
         return (
         <tr key={element.id} className="border-b-[0.1px] border-gray-400 capitalize">
+            <input type="checkbox" key={element.id} value={element.id} onChange={()=>addSelected(element.id)} />
             <td>{element.date?.substring(0, 10)}</td>
             <td>{element.category.category}</td>
             <td>{element.note}</td>
@@ -93,6 +120,10 @@ const ExpenseTable = ({data, categoryData})=>{
                 </select>
             </div>
         </div>
+        <div>
+            <button onClick={()=>removeExpense(selected)}>Cancella selezionati</button>
+            <button>Aggiorna selezionati</button>
+        </div>
         <div className='relative'>
             <EditExpense data={data} categoryData={categoryData} edit={edit} setEdit={setEdit} />
         </div>
@@ -100,6 +131,7 @@ const ExpenseTable = ({data, categoryData})=>{
             <table className="basis-full table-auto">
                 <thead>
                     <tr className="border-b-[0.1px] border-gray-400 text-left font-semibold md:text-base p-10">
+                        <th scope="col">Seleziona</th>
                         <th scope="col">Data</th>
                         <th scope="col">Categoria</th>
                         <th scope="col">Descrizione</th>

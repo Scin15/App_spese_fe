@@ -21,6 +21,7 @@ const EditExpense = ({data, categoryData, edit, setEdit})=>{
     var index = null
     
     if (edit.isEditing) {
+        // ho passato l'id della tabella, quindi ricavo l'indice dell'array data avendo l'id della spesa. Mi serve soltanto per mostrare come valori di default, quelli che già ho caricato
         index = data.findIndex((e)=> e.id === edit.dataID)
         editedData = data[index]
     }
