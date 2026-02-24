@@ -12,11 +12,11 @@ import { distinctArray } from '../../jsUtils/utils'
 
 /* implementazioni: ----------
 
-1. check per selezionare più spese o anche tutte per eliminarle o modificarle in un colpo solo. Inserisco bottoni rimuovi-selezionati e modifica-selezionati;
-2. bottone per ordinamento per prezzo e per data;
+1. check per selezionare più spese o anche tutte per eliminarle o modificarle in un colpo solo. Inserisco bottoni rimuovi-selezionati e modifica-selezionati; ok
+2. bottone per ordinamento per prezzo e per data; ok
 2. inserimento opzione per caricamento file per ogni spesa;
 3. riformulo le statistiche. Voglio aver la possibilità di filtrare su mese, anno, categoria, sia su grafico a torta che su grafico a barre. 
-4. verificare perchè non viene aggiurnato il budget utente;
+4. verificare perchè non viene aggiurnato il budget utente; ok
 5. categorie inseribili dall'utente nel suo pannello;
 
 Nice to have:
@@ -38,6 +38,8 @@ const ExpenseTable = ({data, categoryData})=>{
     const [yearFilter, setYearFilter] = useState("");
     const [monthFilter, setMonthFilter] = useState("");
     const [selected, setSelected] = useState([]);
+    const [priceOrder, setPriceOrder] = useState(null);
+    const [dataOrder, setDataOrder] = useState(null);
 
     // questa funzione dovrà rimuovere la spesa dal DB facendo una chiamata DELETE al server e passando l'ID
     const removeExpense = (id)=>{
@@ -54,7 +56,9 @@ const ExpenseTable = ({data, categoryData})=>{
 
     const editExpense = (id)=> {
         //popup tipo form con campi da compilare e confermare
-        setEdit({isEditing: true, dataID: id})
+        console.log("Id passati nel setEdit", id);
+        setEdit({isEditing: true, dataID: id});
+        document.querySelector("dialog").showModal();
     }
 
     const addSelected = (id) => {
@@ -71,6 +75,17 @@ const ExpenseTable = ({data, categoryData})=>{
 
     // riordino per aver le date decrescenti
     data.sort((a, b) => new Date(b.date) - new Date(a.date));
+    if (priceOrder) {
+        // 1 = crescente, 2 = decrescente
+        data.sort((a, b) => priceOrder === 1 ? b.amount -a.amount : a.amount - b.amount);
+        console.log("Dati dopo riordino", data);
+    }
+
+    if (dataOrder) {
+        // 1 = crescente, 2 = decrescente
+        data.sort((a, b) => dataOrder === 1 ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date));
+        console.log("Dati dopo riordino", data);
+    }
 
     // ritorno le righe della tabella a partire dall'array DB
     const rows = data.filter((element)=> {
@@ -81,7 +96,9 @@ const ExpenseTable = ({data, categoryData})=>{
     }).map((element)=>{
         return (
         <tr key={element.id} className="border-b-[0.1px] border-gray-400 capitalize">
-            <input type="checkbox" key={element.id} value={element.id} onChange={()=>addSelected(element.id)} />
+            <td className=''>
+                <input className="" type="checkbox" key={element.id} value={element.id} onChange={()=>addSelected(element.id)} />
+            </td>
             <td>{element.date?.substring(0, 10)}</td>
             <td>{element.category.category}</td>
             <td>{element.note}</td>
@@ -121,12 +138,17 @@ const ExpenseTable = ({data, categoryData})=>{
             </div>
         </div>
         <div>
-            <button onClick={()=>removeExpense(selected)}>Cancella selezionati</button>
-            <button>Aggiorna selezionati</button>
+            <button className="font-normal m-[10px] bg-blue-100 p-[5px] hover:bg-blue-200 rounded-lg" onClick={()=>{if (!selected.length) return; removeExpense(selected)}}>Cancella selezionati</button>
+            <button className="font-normal m-[10px] bg-blue-100 p-[5px] hover:bg-blue-200 rounded-lg" onClick={()=>{if(!selected.length) return; editExpense(selected)}}>Aggiorna selezionati</button>
+            <button className="font-normal m-[10px] bg-blue-100 p-[5px] hover:bg-blue-200 rounded-lg" onClick={()=>setPriceOrder(priceOrder === 1 ? null : 1)}>Prezzo crescente</button>
+            <button className="font-normal m-[10px] bg-blue-100 p-[5px] hover:bg-blue-200 rounded-lg" onClick={()=>setPriceOrder(priceOrder ===-1 ? null : -1)}>Prezzo decrescente</button>
+            <button className="font-normal m-[10px] bg-blue-100 p-[5px] hover:bg-blue-200 rounded-lg" onClick={()=>setDataOrder(dataOrder === 1 ? null : 1)}>Data crescente</button>
+            <button className="font-normal m-[10px] bg-blue-100 p-[5px] hover:bg-blue-200 rounded-lg" onClick={()=>setDataOrder(dataOrder === -1 ? null : -1)}>Data decrescente</button>
+
         </div>
-        <div className='relative'>
-            <EditExpense data={data} categoryData={categoryData} edit={edit} setEdit={setEdit} />
-        </div>
+        <dialog className='m-auto'>
+            <EditExpense data={data} categoryData={categoryData} edit={edit} setEdit={setEdit} setSelected={setSelected} />
+        </dialog>
         <div className='flex basis-full overflow-auto max-h-100 mt-[1rem]'>
             <table className="basis-full table-auto">
                 <thead>

@@ -24,3 +24,5 @@ export default async function insertData(url, data, token) {
     const insertedExpense = await response.json();
     return insertedExpense;
 }
+
+// insertData("http://localhost:3000")

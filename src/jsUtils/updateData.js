@@ -14,7 +14,7 @@ export default async function updateData(url, data, token) {
                     authorization: `Bearer ${token}`
                 },
                 body: JSON.stringify({
-                    id: Number(id),
+                    id: Array.isArray(id) ? id : Number(id),
                     category_id: Number(category_id),
                     amount: Number(amount),
                     note,
@@ -22,7 +22,7 @@ export default async function updateData(url, data, token) {
                 })
             })
             if(!response.ok){
-                throw new Error
+                throw new Error;
             }
             const insertedExpense = await response.json()
             console.log("Spesa modificata: ", insertedExpense)

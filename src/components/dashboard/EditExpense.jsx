@@ -5,9 +5,11 @@ import { useContext, useState } from 'react'
 import LoadingContext from '../context/LoadingContext'
 import UserContext from '../context/UserContext'
 
-const EditExpense = ({data, categoryData, edit, setEdit})=>{
+const EditExpense = ({data, categoryData, edit, setEdit, setSelected})=>{
 
-    console.log("Refreshato il componente EditExpense")
+    // {isEditing: false, dataID: null}
+
+    console.log("Refreshato il componente EditExpense");
 
     const [loading, setLoading] = useContext(LoadingContext)
     const [user] = useContext(UserContext)
@@ -17,13 +19,14 @@ const EditExpense = ({data, categoryData, edit, setEdit})=>{
     //devo sapere che spesa sto modificando
     //console.log(categoryData)
 
-    var editedData = {}
-    var index = null
+    let editedData = {};
+    let index = null;
+    const isArray = Array.isArray(edit.dataID);
     
     if (edit.isEditing) {
         // ho passato l'id della tabella, quindi ricavo l'indice dell'array data avendo l'id della spesa. Mi serve soltanto per mostrare come valori di default, quelli che già ho caricato
-        index = data.findIndex((e)=> e.id === edit.dataID)
-        editedData = data[index]
+        index = isArray ? null :data.findIndex((e)=> e.id === edit.dataID)
+        editedData = isArray ? null : data[index];
     }
 
     const options = categoryData.map((element)=>{
@@ -31,8 +34,8 @@ const EditExpense = ({data, categoryData, edit, setEdit})=>{
     })
 
     // invio una richiesta PUT al server per la modifica
-    const EditExpense = (event)=>{
-        event.preventDefault()
+    const editExpense = (event)=>{
+        event.preventDefault();
 
         const editedExpense = {
             id: edit.dataID,
@@ -52,59 +55,62 @@ const EditExpense = ({data, categoryData, edit, setEdit})=>{
         }
         
         // controllo che sia inserito un valore non nullo per l'importo
-        if (editedExpense.amount == null || editedExpense.amount == ""){
+        if (!editedExpense.amount) {
             console.log("L'importo è vuoto!")
             setImportErr(true)
             return
         }
 
-        console.log("Richiesta di update: ", editedExpense)
+        console.log("Richiesta di update: ", editedExpense);
 
         updateData(`${import.meta.env.VITE_END_POINT}/expenses`, editedExpense, user.accessToken)
         .then(e=>{
             console.log("Dati aggiornati: ", e)
-            setLoading(true)
+            setLoading(true);
         })
 
-        setEdit({isEditing:false, dataID: null})
+        setEdit({isEditing:false, dataID: null});
+        setSelected([]);
+        document.querySelector("dialog").close();
     }
     
-    return <div className={edit.isEditing ? "flex flex-col absolute w-full shadow-xl rounded-xl bg-white items-stretch basis-full text-sm" : "hidden"}>
+    return <div className={"flex flex-col w-full shadow-xl rounded-xl bg-white items-stretch text-sm"}>
         <div className="relative ml-[10px] mt-[10px] mr-[10px] text-bold text-base">
             <h1>Modifica spesa</h1>
             <button onClick={()=>{
-                setEdit({isEditing: false, dataID: null})
-                setDateErr(false)
-                setImportErr(false)
+                setEdit({isEditing: false, dataID: null});
+                setDateErr(false);
+                setImportErr(false);
+                document.querySelector("dialog").close();
                 }} className="absolute top-px right-px">
                 <CloseIcon className='hover:text-blue-400 rounded-lg' />
             </button>
         </div>
             <form action="" className="flex flex-col items-stretch m-[10px]">
-                <div className="flex flex-col md:flex-row justify-between">
+                <div className="flex flex-col md:flex-row justify-between md:gap-[16px]">
                     <div className="flex flex-col">
                         <label htmlFor="data">Data</label>
-                        <input key={edit.dataID} type="date" name="data" defaultValue={editedData.date?.substring(0,10)}></input>
+                        <input key={edit.dataID} type="date" name="data" defaultValue={editedData?.date?.substring(0,10)}></input>
                         <p className="text-red-500">{(dateErr) && "Inserisci una data valida"}</p>
                     </div>
                     <div className="flex flex-col">
                         <label htmlFor="categoria">Categoria</label>
-                        <select key={edit.dataID} className="" name="categoria" id="" defaultValue={editedData.category_id}>
+                        <select key={edit.dataID} className="" name="categoria" id="" defaultValue={editedData?.category_id}>
                             {options}
                         </select>
                     </div>
                     <div className="flex flex-col">
                         <label htmlFor="nota">Note</label>
-                        <input key={edit.dataID} type="text" name="nota" defaultValue={editedData.note} />
+                        <input key={edit.dataID} type="text" name="nota" defaultValue={editedData?.note} />
                     </div>
                     <div className="flex flex-col">
                         <label htmlFor="importo">Importo</label>
-                        <input key={edit.dataID} type="number" name="valore"  defaultValue={editedData.amount} />
+                        <input key={edit.dataID} type="number" name="valore"  defaultValue={editedData?.amount} />
                         <p className="text-red-500">{(importErr) && "Inserisci un' importo valido"}</p>
                     </div>
                 </div>
                 <div className="flex justify-end mr-[10px] mt-[10px]">
-                    <button className="font-normal m-[10px] bg-blue-100 p-[5px] hover:bg-blue-200 rounded-lg" onClick={EditExpense}>Modifica</button>
+                    <button className="font-normal m-[10px] bg-blue-100 p-[5px] hover:bg-blue-200 rounded-lg" onClick={editExpense}>Modifica</button>
                 </div>
             </form>
     </div>
