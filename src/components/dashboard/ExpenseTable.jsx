@@ -15,7 +15,7 @@ import { distinctArray } from '../../jsUtils/utils'
 1. check per selezionare più spese o anche tutte per eliminarle o modificarle in un colpo solo. Inserisco bottoni rimuovi-selezionati e modifica-selezionati; ok
 2. bottone per ordinamento per prezzo e per data; ok
 2. inserimento opzione per caricamento file per ogni spesa;
-3. riformulo le statistiche. Voglio aver la possibilità di filtrare su mese, anno, categoria, sia su grafico a torta che su grafico a barre. 
+3. riformulo le statistiche. Voglio aver la possibilità di filtrare su mese, anno, categoria, sia su grafico a torta che su grafico a barre. <<in lavorazione>>
 4. verificare perchè non viene aggiurnato il budget utente; ok
 5. categorie inseribili dall'utente nel suo pannello;
 
@@ -77,7 +77,7 @@ const ExpenseTable = ({data, categoryData})=>{
     data.sort((a, b) => new Date(b.date) - new Date(a.date));
     if (priceOrder) {
         // 1 = crescente, 2 = decrescente
-        data.sort((a, b) => priceOrder === 1 ? b.amount -a.amount : a.amount - b.amount);
+        data.sort((a, b) => priceOrder === 1 ? a.amount - b.amount : b.amount - a.amount);
         console.log("Dati dopo riordino", data);
     }
 

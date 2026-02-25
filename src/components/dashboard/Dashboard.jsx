@@ -25,14 +25,21 @@ function Dashboard() {
   useEffect(()=>{
     
     const loadData = async () => {
-      const loadedExpense = await fetchData(`${import.meta.env.VITE_END_POINT}/expenses`, user.accessToken);
-      const loadedCategory = await fetchData(`${import.meta.env.VITE_END_POINT}/category`, user.accessToken);
-      const loadStats = await fetchData(`${import.meta.env.VITE_END_POINT}/expenses/kpi`, user.accessToken);
+      let loadedExpense = null;
+      let loadedCategory = null;
+      let loadStats = null;
+      try {
+        loadedExpense = await fetchData(`${import.meta.env.VITE_END_POINT}/expenses`, user.accessToken);
+        loadedCategory = await fetchData(`${import.meta.env.VITE_END_POINT}/category`, user.accessToken);
+        loadStats = await fetchData(`${import.meta.env.VITE_END_POINT}/expenses/kpi`, user.accessToken);
+      } catch(e) {
+        console.log(`Errore nel caricamento dati: ${e.message}`);
+      }
 
       setExpenseData({
         expenseList: loadedExpense,
         categoryList: loadedCategory,
-        stats: loadStats
+        stats: loadStats,
       })
       setLoading(false)
     }
@@ -42,9 +49,9 @@ function Dashboard() {
   }, [loading])
 
   // se ancora sto caricando i dati mostro la scritta di caricamento
-  if (loading) {
-    return <div>Loading...</div>
-  }
+//   if (loading) {
+//     return <div>Loading...</div>
+//   }
 
   return (
     <LoadingContext value={[loading, setLoading]}>
