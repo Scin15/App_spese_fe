@@ -40,17 +40,17 @@ const options = {
 const VBarChart = ({ data }) => {
 
   // riordino il dataset in base alle date
-  data.monthlyAmount.sort((a, b) => {
+  data.categoryMonthAmount.sort((a, b) => {
       return new Date(a.yearmonth) - new Date(b.yearmonth)
     }
   )
 
 const dataChart = {
-  labels: data.monthlyAmount.map(e => e.yearmonth),
+  labels: data.categoryMonthAmount.map(e => e.yearmonth),
   datasets: [
     {
       label: '',
-      data: data.monthlyAmount.map(e => e.amount),
+      data: data.categoryMonthAmount.map(e => e.amount),
       backgroundColor: 'rgba(72, 122, 189, 1)',
     },
   ],

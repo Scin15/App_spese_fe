@@ -31,12 +31,12 @@ const options = {
 const PieChart = ({ data })=> {
   
   const dataChart = {
-    labels: data.categoryAmount.map(e => e.category),
+    labels: data.categoryMonthAmount.map(e => e.category),
     title: "Distribuzione spese per categoria",
     datasets: [
       {
         label: 'Distribuzione spese per categoria',
-        data: data.categoryAmount.map(e => e.amount),
+        data: data.categoryMonthAmount.map(e => e.amount),
         backgroundColor: [
         'rgba(0, 83, 192, 1)',
         'rgba(72, 122, 189, 1)',

@@ -10,7 +10,7 @@ const Stats = () => {
     const [user, setUser] = useContext(UserContext);
     const [data, setData] = useState({
         categoryAmount: [],
-        monthlyAmount: []
+        categoryMonthAmount: []
     });
     const [yearFilter, setYearFilter] = useState("");
     const [monthFilter, setMonthFilter] = useState("");
@@ -28,10 +28,10 @@ const Stats = () => {
             setData(stats); 
         }
         loadData()
-    }, [])
+    })
 
     const dataFiltered = {...data};
-    dataFiltered.monthlyAmount = data.monthlyAmount.filter((e) => {
+    dataFiltered.categoryMonthAmount = data.categoryMonthAmount.filter((e) => {
         const year = new Date(e.yearmonth).getFullYear();
         const month = new Date(e.yearmonth).getMonth();
         //filtro sull'anno e il mese solamente se ho settato il filtro anno o il filtro mese o entrambi. Se non ho settato anno, la condizione !yearFilter è soddisfatta, stessa cosa per monthFilter
@@ -42,14 +42,11 @@ const Stats = () => {
 
     return (
         <div className="flex flex-col items-center">
-            <div className='shadow-xl inset-shadow-sm rounded-xl flex items-start m-[10px] p-[10px] w-full'>
-                <PieChart data={data} />
-            </div>
             <div>
                 <label htmlFor="year">Anno</label>
                 <select className='shadow-xl m-2' name='year' id='year' onChange={(e)=> setYearFilter(e.target.value)}>
                     <option value=""></option>
-                    {distinctArray(data.monthlyAmount.map((e) => {const year = new Date(e.yearmonth).getFullYear();
+                    {distinctArray(data.categoryMonthAmount.map((e) => {const year = new Date(e.yearmonth).getFullYear();
                     return (year);})).map((e) => <option key={e} value={e}>{e}</option>)
                 }
                 </select>
@@ -59,6 +56,9 @@ const Stats = () => {
                     {[0,1,2,3,4,5,6,7,8,9,10,11].map((e) => <option key={e} value={e}>{e+1}</option>)
                     }
                 </select>
+            </div>
+            <div className='shadow-xl inset-shadow-sm rounded-xl flex items-start m-[10px] p-[10px] w-full'>
+                <PieChart data={dataFiltered} />
             </div>
             <div className='shadow-xl inset-shadow-sm rounded-xl flex items-start m-[10px] p-[10px] w-full'>
                 <VBarChart data={dataFiltered} />

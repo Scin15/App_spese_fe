@@ -14,13 +14,13 @@ import SyncIcon from '@mui/icons-material/Sync'
 
 function Dashboard() {
   
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true);
   const [expenseData, setExpenseData] = useState({expenseList: [], categoryList: [], stats: {
     total: 0,
     maxCategory: {},
-    budget: 0,}})
-  const [user] = useContext(UserContext)
-  const budgetLeft = expenseData.stats.budget - expenseData.stats.total
+    budget: 0,}});
+  const [user] = useContext(UserContext);
+  const budgetLeft = expenseData.stats.budget - expenseData.stats.total;
   
   useEffect(()=>{
     
