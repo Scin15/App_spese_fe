@@ -49,9 +49,9 @@ function Dashboard() {
   }, [loading])
 
   // se ancora sto caricando i dati mostro la scritta di caricamento
-//   if (loading) {
-//     return <div>Loading...</div>
-//   }
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <LoadingContext value={[loading, setLoading]}>

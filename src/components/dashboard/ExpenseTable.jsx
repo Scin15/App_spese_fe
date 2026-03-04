@@ -14,7 +14,7 @@ import { distinctArray } from '../../jsUtils/utils'
 
 1. check per selezionare più spese o anche tutte per eliminarle o modificarle in un colpo solo. Inserisco bottoni rimuovi-selezionati e modifica-selezionati; ok
 2. bottone per ordinamento per prezzo e per data; ok
-2. inserimento opzione per caricamento file per ogni spesa;
+2. inserimento opzione per caricamento file per ogni spesa; <<in lavorazione>>
 3. riformulo le statistiche. Voglio aver la possibilità di filtrare su mese, anno, categoria, sia su grafico a torta che su grafico a barre. <<in lavorazione>>
 4. verificare perchè non viene aggiurnato il budget utente; ok
 5. categorie inseribili dall'utente nel suo pannello;

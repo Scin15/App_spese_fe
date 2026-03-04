@@ -25,12 +25,16 @@ const InsertExpense = ({categoryData})=>{
         e.preventDefault();
         
         const newExpense = {
+            // da cambiare per renderlo dinamico
             userid: user.id,
             date: e.target.form[0].value,
             category_id: e.target.form[1].value,
             note: e.target.form[2].value,
-            amount: e.target.form[3].value,
+            file: e.target.form[3].files[0],
+            amount: e.target.form[4].value,
         };
+
+        console.log("Stampo inserimento", newExpense);
         const today = new Date();
         const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
         const convertedDate = new Date(newExpense.date);
@@ -65,18 +69,22 @@ const InsertExpense = ({categoryData})=>{
                     <div className="flex flex-col md:flex-row justify-between">
                         <div className="flex flex-col">
                             <label htmlFor="data">Data</label>
-                            <input type="date" required name="data" />
+                            <input type="date" required name="data" id="data" />
                             <p className="text-red-500">{(dateErr) && "Inserisci una data valida"}</p>                        
                         </div>
                         <div className="flex flex-col">
                             <label htmlFor="categoria">Categoria</label>
-                            <select className="" name="categoria" id="">
+                            <select className="" name="categoria" id="categoria">
                                 {options}
                             </select>
                         </div>
                         <div className="flex flex-col">
                             <label htmlFor="nota">Note</label>
-                            <input type="text" name="nota" />
+                            <input type="text" name="nota" id="nota" />
+                        </div>
+                        <div className="flex flex-col">
+                            <label htmlFor="file">File</label>
+                            <input type="file" name="file" id="file" />
                         </div>
                         <div className="flex flex-col">
                             <label htmlFor="importo">Importo</label>

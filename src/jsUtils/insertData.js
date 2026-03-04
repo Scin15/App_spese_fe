@@ -1,7 +1,7 @@
 
 export default async function insertData(url, data, token) {
 
-    const { userid, category_id, amount, note, date } = data
+    const { userid, category_id, amount, note, date, file } = data
 
     const response = await fetch(url, {
         method: "POST",
@@ -15,7 +15,8 @@ export default async function insertData(url, data, token) {
             category_id: Number(category_id),
             amount: Number(amount),
             note,
-            date
+            date,
+            file,
         })
     })
     if(!response.ok){
@@ -24,5 +25,3 @@ export default async function insertData(url, data, token) {
     const insertedExpense = await response.json();
     return insertedExpense;
 }
-
-// insertData("http://localhost:3000")
