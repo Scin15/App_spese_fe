@@ -9,5 +9,6 @@ Stack utilizzato:
 4. Semplice backend con Express.js per gestione autenticazione/accessi con JWT e operazioni CRUD su db Postgresql;
 
 Repository del server: https://github.com/Scin15/App_spese_be
+Link all'applicazione live: https://app-spese-fe.onrender.com
 
 
